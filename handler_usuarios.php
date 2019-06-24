@@ -1,41 +1,41 @@
 <?php
 session_start();
-include_once('model/abogados.php');    
+include_once('model/usuario.php');    
 include_once('model/Templete.php');
 
 function handler() {
 $pag= helper_pag_data();
-$per=new abogados();
+$per=new usuarios();
 $template=new Template();//activacion de los diseños de bostrap//
 $template->head();
 switch ($pag) {
-	case 'listar_abogados':
+	case 'listar_usuarios':
          echo $per->get_tabla();
 	break;
-	case 'registrar_abogados':
-		$per->get_datos_abogados($_POST);
+	case 'registrar_usuarios':
+		$per->get_datos_usuarios($_POST);
 		echo $per->get_tabla();
 	break;
-	case 'form_nuevo_abogados':
-         $per->form_nuevo_abogados();
+	case 'form_nuevo_usuarios':
+         $per->form_nuevo_usuarios();
 	break;
-	case 'modificar_abogados':
-		$per->get_datos_modificar_abogados($_POST);
+	case 'modificar_usuarios':
+		$per->get_datos_modificar_usuarios($_POST);
 		echo $per->get_tabla();
 	break;
-	case 'form_modificar_abogados':
-	    $per->get_by_id_abogados($_GET['id_abogados']);
-		$per->form_modificar_abogados();
+	case 'form_modificar_usuarios':
+	    $per->get_by_id_usuarios($_GET['id_usuarios']);
+		$per->form_modificar_usuarios();
 	break;
-	case 'eliminar_abogados':
+	case 'eliminar_usuarios':
 		$per->get_datos_eliminar_r($_POST);
 		echo $per->get_tabla();
 
 
 	break;
-	case 'form_eliminar_abogados':
-		$per->get_by_id_abogados($_GET['id_abogados']);
-		$per->form_eliminar_abogados();
+	case 'form_eliminar_usuarios':
+		$per->get_by_id_usuarios($_GET['id_usuarios']);
+		$per->form_eliminar_usuarios();
 
 	break;
 	case 'exportar_pdf':

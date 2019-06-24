@@ -1,0 +1,138 @@
+/*
+SQLyog Community v13.1.2 (64 bit)
+MySQL - 10.1.33-MariaDB : Database - yeth_db
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`yeth_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `yeth_db`;
+
+/*Table structure for table `categoria` */
+
+DROP TABLE IF EXISTS `categoria`;
+
+CREATE TABLE `categoria` (
+  `id_categoria` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre_c` VARCHAR(50) DEFAULT NULL,
+  `descripcion` VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (`id_categoria`)
+) ENGINE=INNODB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+/*Data for the table `categoria` */
+
+INSERT  INTO `categoria`(`id_categoria`,`nombre_c`,`descripcion`) VALUES 
+(12,'dasd','sda');
+
+/*Table structure for table `detalle` */
+
+DROP TABLE IF EXISTS `detalle`;
+
+CREATE TABLE `detalle` (
+  `num_detalle` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` INT(11) DEFAULT NULL,
+  `cantidad` INT(11) DEFAULT NULL,
+  `precio` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`num_detalle`),
+  KEY `id_producto` (`id_producto`),
+  CONSTRAINT `detalle_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
+) ENGINE=INNODB AUTO_INCREMENT=124 DEFAULT CHARSET=latin1;
+
+/*Data for the table `detalle` */
+
+INSERT  INTO `detalle`(`num_detalle`,`id_producto`,`cantidad`,`precio`) VALUES 
+(23,12,23,12),
+(123,12,23,12);
+
+/*Table structure for table `producto` */
+
+DROP TABLE IF EXISTS `producto`;
+
+CREATE TABLE `producto` (
+  `id_producto` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre_p` VARCHAR(50) DEFAULT NULL,
+  `precio` INT(11) DEFAULT NULL,
+  `stock` INT(11) DEFAULT NULL,
+  `id_categoria` INT(11) DEFAULT NULL,
+  PRIMARY KEY (`id_producto`),
+  KEY `id_categoria` (`id_categoria`),
+  CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`)
+) ENGINE=INNODB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+/*Data for the table `producto` */
+
+INSERT  INTO `producto`(`id_producto`,`nombre_p`,`precio`,`stock`,`id_categoria`) VALUES 
+(12,'wdad',12,231,12);
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+CREATE TABLE USUARIOS(
+
+id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(50),
+PASSWORD VARCHAR(50)
+);
+CREATE TABLE CLIENTE( 
+	
+	NOMBRE VARCHAR(25),
+	APELLIDO VARCHAR(25),
+	DIRECCION VARCHAR(25),
+	FECHA_NACIMIENTO VARCHAR(25),
+	TELEFONO VARCHAR(25),
+	EMAIL VARCHAR(25),
+	ID_CLIENTE INT AUTO_INCREMENT PRIMARY KEY
+);
+CREATE TABLE MODO_PAGO(
+	NUM_PAGO INT AUTO_INCREMENT PRIMARY KEY,
+	NOMBRE VARCHAR(25),
+	OTROS_DETALLES VARCHAR(25)
+
+);
+CREATE TABLE FACTURA(
+	NUM_FACTURA INT AUTO_INCREMENT PRIMARY KEY,
+	ID_CLIENTE INT,
+	FECHA VARCHAR(25),
+	NUM_PAGO INT,
+	FOREIGN KEY(ID_CLIENTE)
+		REFERENCES CLIENTE(ID_CLIENTE),
+	FOREIGN KEY(NUM_PAGO)
+		REFERENCES MODO_PAGO(NUM_PAGO)
+);
+
+CREATE TABLE PRODUCTO
+(
+	id_producto INT PRIMARY KEY AUTO_INCREMENT,
+	nombre_p VARCHAR(50),
+	precio INT,
+	stock INT,
+	id_categoria INT,
+	FOREIGN KEY (id_categoria)
+	REFERENCES categoria(id_categoria)
+);
+CREATE TABLE DETALLE
+(
+	num_detalle INT PRIMARY KEY AUTO_INCREMENT,
+	id_producto INT,
+	FOREIGN KEY (id_producto)
+	REFERENCES producto(id_producto),
+	cantidad INT,
+	precio INT
+);
+CREATE TABLE CATEGORIA
+(
+	id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+	nombre_c VARCHAR(50),
+	descripcion VARCHAR(50)
+);
+
